@@ -1,0 +1,16 @@
+<input type="text" [(ngModel)]="searchText" placeholder="Search By Category" />
+
+
+<!-- <div *ngFor="let workout of myWorkouts | filter: searchText">
+  Workout Name {{workout.name}}
+  <div *ngFor="let excercise of workout.excercises">
+    Excercise Name: {{excercise.name}}
+    <div *ngFor="let set of excercise.sets">
+      Sets: {{set.weight}} : {{set.reps}}
+    </div>
+  </div>
+</div> -->
+<h1>Your Workouts</h1>
+<div *ngFor="let workout of myWorkouts | filter: searchText">
+  {{workout.name}}
+</div>

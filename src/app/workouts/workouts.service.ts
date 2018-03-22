@@ -1,32 +1,40 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
-import { config } from '../config';
-let urls = config.baseUrls;
-
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/catch';
-// import 'rxjs/add/operator/delay';
-import 'rxjs/add/operator/do';
-// import 'rxjs/add/operator/finally';
-import 'rxjs/add/operator/map';
-// import 'rxjs/add/operator/toPromise';
-// import 'rxjs/add/observable/of';
-// import 'rxjs/add/observable/fromPromise';
-import 'rxjs/add/observable/throw';
 
+import { config } from '../shared/config';
+import { Workout, Excercise, Set } from '../shared/objectDefinitions'
+
+
+let urls = config.baseUrls;
 @Injectable()
 export class WorkoutService {
     constructor(private http: Http) {
 
     }
 
-    getWorkouts():Observable<any> {
+    addWorkout(newWorkout): Observable<any> {
+        return this.http.post("", newWorkout).map((response: Response) => {
+            console.log(response);
+            return response.json();
+        })
+    }
+
+    editWorkout(workout): Observable<any> {
+        return this.http.put("", workout).map((response: Response) => {
+            console.log(response);
+            return <Workout>response.json();
+
+        })
+    }
+
+    getMyWorkouts(): Observable<any> {
         return this.http
-            .get(urls.workouts)
+            .get(urls.serviceUrl+ "myworkouts")
             .map((response: Response) => {
-              return response.json();
-                        });
-            // .do(data => console.log(data));
+                console.log(response.json());
+                return <Workout[]>response.json();
+            });
     }
 
 }

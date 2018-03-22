@@ -1,20 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import {WorkoutService} from './workouts.service'
+
 @Component({
   selector: 'app-workouts',
-  templateUrl: './workouts.component.html',
-  styleUrls: ['./workouts.component.css'],
-  providers:[WorkoutService]
+  template: `<router-outlet></router-outlet>`,
+  providers:[]
+  
 })
 export class WorkoutsComponent implements OnInit {
-  workouts: any;
-  constructor(private workoutService: WorkoutService) { }
+  myWorkouts: any;
+  searchText: any;
+ 
+  constructor() { }
 
   ngOnInit() {
-    this.workoutService.getWorkouts().subscribe(
-      workouts => this.workouts = workouts,
-      error =>  console.log(error)
-    );
+
   }
 
 }

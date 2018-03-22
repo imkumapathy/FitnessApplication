@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {AboutUsComponent} from './aboutus/aboutus.component'
-import {WorkoutsComponent} from './workouts/workouts.component';
 import { HomeComponent } from './home/home.component';
+import { HistoryComponent } from './history/history.component';
 
 export const route:Routes = [
 {path:'',pathMatch:'full', redirectTo:'home'},
 {path:'home',component: HomeComponent},
 {path:'aboutus',component: AboutUsComponent},
-{path:'workout',component: WorkoutsComponent},
+{path:'workout',loadChildren:'./workouts/workouts.module#WorkoutsModule'},
+{path:'history', component:HistoryComponent}
 ];
 
 @NgModule({
@@ -20,6 +21,6 @@ export class AppRoutingModule{};
 
 export const RoutableComponents= [
 AboutUsComponent,
-WorkoutsComponent,
 HomeComponent,
+HistoryComponent
 ];

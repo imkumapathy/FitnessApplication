@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 
 import { FilterPipe } from './filter.pipe';
+import {GroupByPipe} from './groupBy.pipe';
 
 // imports: imports the module's exports. which are usually
 // declarables(components / directives / pipes) and providers.
@@ -14,7 +15,7 @@ import { FilterPipe } from './filter.pipe';
 // Even so, we import/export both of these because most other modules will import SharedModule and will need them.
 @NgModule({
     imports: [CommonModule, FormsModule],
-    exports: [CommonModule, FormsModule, FilterPipe],
-    declarations: [FilterPipe],
+    exports: [CommonModule, FormsModule, FilterPipe,GroupByPipe],
+    declarations: [FilterPipe,GroupByPipe],
 })
 export class SharedModule { }

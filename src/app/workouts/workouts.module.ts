@@ -4,7 +4,7 @@ import { WorkoutRoutableComponents, WorkoutRoutingModule } from './workouts-rout
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { WorkoutService } from './workouts.service';
-import {ExcerciseService} from './excercise.service';
+import {ExcerciseService} from '../shared-services/excercise.service';
 
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2-multiselect-dropdown';
 

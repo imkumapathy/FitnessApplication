@@ -5,7 +5,8 @@ import { AppComponent } from './app.component';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import {TabMenuModule} from 'primeng/tabmenu';
+import { ExcerciseService } from './shared-services/excercise.service';
 import './shared/rjxs-extensions';
 
 @NgModule({
@@ -13,9 +14,9 @@ import './shared/rjxs-extensions';
     AppComponent, RoutableComponents
   ],
   imports: [
-    FormsModule, BrowserModule, BrowserAnimationsModule, AppRoutingModule, HttpModule
+    FormsModule, BrowserModule, BrowserAnimationsModule, AppRoutingModule, HttpModule,TabMenuModule
   ],
-  providers: [],
+  providers: [ExcerciseService],
   bootstrap: [AppComponent]
 
 })

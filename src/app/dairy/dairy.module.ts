@@ -6,10 +6,18 @@ import {DairyRoutableComponents,DairyRoutingModule} from './dairy-routing.module
 import { DairyComponent } from './dairy.component';
 import { WorkoutSetsService } from './workoutSets.services';
 import {CalendarModule} from 'primeng/calendar';
+import {DataTableModule} from 'primeng/datatable';
+import {DataGridModule} from 'primeng/datagrid';
+import {PanelModule} from 'primeng/panel';
+import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2-multiselect-dropdown';
 
+
+import {SharedModule} from '../shared/shared.module';
 @NgModule({
   imports: [
-    CommonModule,FormsModule,CalendarModule, DairyRoutingModule
+    CommonModule,FormsModule,CalendarModule, SharedModule,DataTableModule,DataGridModule,PanelModule,
+    AngularMultiSelectModule,DairyRoutingModule
+    
   ],
   declarations: [DairyRoutableComponents],
   providers:[WorkoutSetsService]

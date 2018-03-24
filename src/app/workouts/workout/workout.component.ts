@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Workout, Excercise } from '../../shared/objectDefinitions';
 import { Subscription } from 'rxjs/Subscription';
 import { WorkoutService } from '../workouts.service'
-import { ExcerciseService } from '../excercise.service';
+import { ExcerciseService } from '../../shared-services/excercise.service';
 import _ from "lodash";
 
 @Component({
@@ -51,19 +51,13 @@ export class WorkoutComponent implements OnInit {
   private getAllExcercises() {
     this.excersiceService.getAllExcercises().subscribe(
       (response => {
-        this.allExcercies = this.formatExcerciseArray(response);
+        this.allExcercies = response;
         this.selectedItems = this.allExcercies.filter(e => this.workout.excercises.map(m => m.id).includes(e.id));
         console.log(response);
       }),
       (error => console.log(error)));
   }
 
-  formatExcerciseArray(excerices: Excercise[]): Array<Excercise> {
-    let updatedExcercies = excerices.forEach(excerice => {
-      excerice['itemName'] = excerice.name;
-    });
-    return excerices;
-  }
   onItemSelect(item: any) {
   }
 

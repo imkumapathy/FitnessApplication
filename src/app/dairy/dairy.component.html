@@ -1,11 +1,43 @@
-<p-calendar [(ngModel)]="selectedDate" [inline]="true" (onSelect)="onDateSelected()">
-  <ng-template pTemplate="date" let-date>
-    <span [ngStyle]="{backgroundColor: (isDateSelected(date)) ? '#7cc67c' : 'inherit'}" style="border-radius:50%">{{date.day}}</span>
-  </ng-template>
-</p-calendar>
+<div class="dairywrapper">
+  <div class="dairyTopPanel" style="text-align: left;">
+    <p-calendar [(ngModel)]="selectedDate" [inline]="true" (onSelect)="onDateSelected()">
+      <ng-template pTemplate="date" let-date>
+        <span [ngStyle]="{backgroundColor: (isDateSelected(date)) ? '#7cc67c' : 'inherit'}" style="border-radius:50%">{{date.day}}</span>
+      </ng-template>
+    </p-calendar>
+  </div>
 
+  <div class="dairyTop2Panel">
+    <angular2-multiselect [data]="allExcercies" [(ngModel)]="selectedItems" style="width:100px;" (onSelect)="onItemSelect($event)"
+      [settings]="dropdownSettings">
+      <c-item>
+        <ng-template let-item="item">
+          <label style="color: #333;min-width: 150px;"></label>
+          <label for="name">{{item.name}}</label>
+        </ng-template>
+      </c-item>
+    </angular2-multiselect>
+    <button>Add Workout</button>
+  </div>
+  <div class="dairyLowerPanel">
+    <p-dataGrid [emptyMessage]="'Time to do some excercise!'" [value]="selectedSets | groupBy: 'excerciseName'">
+      <p-header>
+        List Of Excercises
+      </p-header>
+      <ng-template let-set pTemplate="item">
+        <div style="padding:3px" class="ui-g-12 ui-md-3">
+          <p-panel [style]="{'text-align':'center'}" (onClick)="onClicked(set.key)">
+            <p-header>
+              <a href="" [routerLink]="['/history']">{{set.key}}</a>
+            </p-header>
 
-<div *ngFor="let set of selectedSets">
-  <div>{{set.excerciseName}} on {{set.date}} </div>
-  <div>Weight:{{set.weight}} Kgs && {{set.reps}} Count</div>
+            <div *ngFor="let setValue of set.value">
+              <div class="car-detail">{{setValue.weight}}Kgs X {{setValue.reps}}</div>
+              <hr class="ui-widget-content" style="border-top:0">
+            </div>
+          </p-panel>
+        </div>
+      </ng-template>
+    </p-dataGrid>
+  </div>
 </div>

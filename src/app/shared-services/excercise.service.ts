@@ -15,8 +15,15 @@ export class ExcerciseService {
         return this.http.get(config.baseUrls.serviceUrl + "excercises")
             .map((response: Response) => {
                 console.log(response.json());
-                return <Excercise[]>response.json();
+                return this.formatExcerciseArray(response.json());
             })
     }
+
+    private  formatExcerciseArray(excerices: Excercise[]): Array<Excercise> {
+        let updatedExcercies = excerices.forEach(excerice => {
+          excerice['itemName'] = excerice.name;
+        });
+        return excerices;
+      }
 
 }

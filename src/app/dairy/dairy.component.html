@@ -1,0 +1,11 @@
+<p-calendar [(ngModel)]="selectedDate" [inline]="true" (onSelect)="onDateSelected()">
+  <ng-template pTemplate="date" let-date>
+    <span [ngStyle]="{backgroundColor: (isDateSelected(date)) ? '#7cc67c' : 'inherit'}" style="border-radius:50%">{{date.day}}</span>
+  </ng-template>
+</p-calendar>
+
+
+<div *ngFor="let set of selectedSets">
+  <div>{{set.excerciseName}} on {{set.date}} </div>
+  <div>Weight:{{set.weight}} Kgs && {{set.reps}} Count</div>
+</div>

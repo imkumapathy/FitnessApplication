@@ -9,7 +9,7 @@ export const workoutRoute: Routes = [
         children: [{
             path: '', component: WorkoutListComponent
         },
-        { path: 'id', component: WorkoutComponent }],
+        { path: ':id', component: WorkoutComponent }],
     }
 ];
 

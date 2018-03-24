@@ -12,5 +12,6 @@
 </div> -->
 <h1>Your Workouts</h1>
 <div *ngFor="let workout of myWorkouts | filter: searchText">
-  {{workout.name}}
+    <a href="" [routerLink]="['/workout', workout.id]">{{workout.name}}</a>
+  
 </div>

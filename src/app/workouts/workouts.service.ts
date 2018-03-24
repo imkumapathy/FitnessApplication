@@ -30,11 +30,19 @@ export class WorkoutService {
 
     getMyWorkouts(): Observable<any> {
         return this.http
-            .get(urls.serviceUrl+ "myworkouts")
+            .get(urls.serviceUrl + "myworkouts")
             .map((response: Response) => {
                 console.log(response.json());
                 return <Workout[]>response.json();
             });
+    }
+
+    getWorkout(workoutId: number) {
+        return this.http.get(urls.serviceUrl + "workout/" + workoutId)
+            .map((response: Response) => {
+                console.log(response.json());
+                return <Workout>response.json();
+            })
     }
 
 }

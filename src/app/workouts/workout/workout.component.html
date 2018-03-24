@@ -1,3 +1,22 @@
-<p>
-  workout works!
-</p>
+<div>
+  <div style="width:20%;">
+      <angular2-multiselect [data]="allExcercies" [(ngModel)]="selectedItems" style="width:100px;" (onSelect)="onItemSelect($event)"
+        [settings]="dropdownSettings">
+        <c-item>
+          <ng-template let-item="item">
+            <label style="color: #333;min-width: 150px;"></label>
+            <label for="name">{{item.name}}</label>
+          </ng-template>
+        </c-item>
+      </angular2-multiselect>
+      <button>Add Workout</button>
+    </div>
+    
+</div>
+
+<div *ngFor="let excercise of workout.excercises">
+  Excercise Name: {{excercise.name}}
+  <!-- <div *ngFor="let set of excercise.sets">
+    Sets: {{set.weight}} kgs : {{set.reps}} reps
+  </div> -->
+</div>

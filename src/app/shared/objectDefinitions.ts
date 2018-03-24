@@ -13,6 +13,11 @@ export class Excercise {
 }
 
 export class Set {
+    id: number;
+    excerciseId: number;
+    date: Date;
+    excerciseName: string;
     weight: number;
     reps: number;
+
 }

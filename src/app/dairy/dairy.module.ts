@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import {DairyRoutableComponents,DairyRoutingModule} from './dairy-routing.module';
 import { DairyComponent } from './dairy.component';
-import { WorkoutSetsService } from './workoutSets.services';
 import {CalendarModule} from 'primeng/calendar';
 import {DataTableModule} from 'primeng/datatable';
 import {DataGridModule} from 'primeng/datagrid';
@@ -20,6 +19,6 @@ import {SharedModule} from '../shared/shared.module';
     
   ],
   declarations: [DairyRoutableComponents],
-  providers:[WorkoutSetsService]
+  providers:[]
 })
 export class DairyModule { }

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Workout, Excercise } from '../../shared/objectDefinitions';
+import { Workout, Excercise } from '../../model/objectDefinitions';
 import { Subscription } from 'rxjs/Subscription';
 import { WorkoutService } from '../workouts.service'
 import { ExcerciseService } from '../../shared-services/excercise.service';

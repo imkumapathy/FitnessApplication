@@ -1,14 +1,18 @@
 <div class="dairywrapper">
-  <div class="dairyTopPanel" style="text-align: left;">
-    <p-calendar [(ngModel)]="selectedDate" [inline]="true" (onSelect)="onDateSelected()">
-      <ng-template pTemplate="date" let-date>
-        <span [ngStyle]="{backgroundColor: (isDateSelected(date)) ? '#7cc67c' : 'inherit'}" style="border-radius:50%">{{date.day}}</span>
-      </ng-template>
-    </p-calendar>
-  </div>
+  <!-- <div class="dairyLowerPanel " style="text-align: left;">
+    
+  </div> -->
 
+  <div class="dairyTopPanel">
+      <p-calendar [(ngModel)]="selectedDate" [inline]="true" (onSelect)="onDateSelected()">
+          <ng-template pTemplate="date" let-date>
+            <span [ngStyle]="{backgroundColor: (isDateSelected(date)) ? '#7cc67c' : 'inherit'}" style="border-radius:50%">{{date.day}}</span>
+          </ng-template>
+        </p-calendar>
+    
+  </div>
   <div class="dairyTop2Panel">
-    <angular2-multiselect [data]="allExcercies" [(ngModel)]="selectedItems" style="width:100px;" (onSelect)="onItemSelect($event)"
+      <angular2-multiselect [data]="allExcercies" [(ngModel)]="selectedItems" style="width:100px;" (onSelect)="onItemSelect($event)"
       [settings]="dropdownSettings">
       <c-item>
         <ng-template let-item="item">
@@ -17,9 +21,7 @@
         </ng-template>
       </c-item>
     </angular2-multiselect>
-    <button>Add Workout</button>
-  </div>
-  <div class="dairyLowerPanel">
+    <button>Save Workout</button>
     <p-dataGrid [emptyMessage]="'Time to do some excercise!'" [value]="selectedSets | groupBy: 'excerciseName'">
       <p-header>
         List Of Excercises

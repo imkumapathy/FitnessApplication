@@ -1,46 +1,67 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { WorkoutSetsService } from './workoutSets.services';
-import { Set, Excercise } from '../shared/objectDefinitions';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { WorkoutSetsService } from '../shared-services/workoutSets.services';
+import { Set, Excercise } from '../model/objectDefinitions';
 import { GroupByPipe } from '../shared/groupBy.pipe';
 import { ExcerciseService } from '../shared-services/excercise.service';
-import {MenuItem} from 'primeng/api';
+import { MenuItem } from 'primeng/api';
 
+import { AppState } from '../redux-state/appState';
+import { GetSetsAction, MySetUpdateAction } from '../redux-state/actions/set.action';
+import { UpdateExcercisesAction, ChangeExcercisesAction } from '../redux-state/actions/excercise.action';
+import { Observable } from 'rxjs/Observable';
+import { Store } from '@ngrx/store';
+import * as fromRoot from '../redux-state/appState';
+import { stateReducer } from '../redux-state/reducers/set.reducers';
 @Component({
   selector: 'app-dairy',
   templateUrl: './dairy.component.html'
 })
-export class DairyComponent implements OnInit {
-  private sets: Array<Set> = new Array<Set>();
+export class DairyComponent implements OnInit, OnDestroy {
+  private sets = new Array<Set>();
+
   private selectedDate;
+
   private selectedSets = new Array<Set>();
   private allExcercies = new Array<Excercise>();
+
   private selectedItems;
-  constructor(private workoutSetsService: WorkoutSetsService, private excerciseService: ExcerciseService) { }
+
+  private setsSubscription;
+  private excerciseSubscription;
+
+  constructor(private workoutSetsService: WorkoutSetsService, private excerciseService: ExcerciseService,
+    private store: Store<any>) {
+  }
 
   @ViewChild(GroupByPipe) filterComponent: GroupByPipe;
   ngOnInit() {
+    this.subscribeRedux();
     this.selectedDate = new Date();
     this.getMySets();
+  }
 
+  ngOnDestroy() {
+    this.setsSubscription.unsubscribe();
+  }
+
+  subscribeRedux() {
+
+    this.setsSubscription = this.store.select('stateReducer').subscribe((state: any) => {
+      this.sets = state.sets;
+      this.selectSetsBasedOnDate();
+      this.updateSelectedDropItems();
+    });
+
+    this.excerciseSubscription = this.store.select('excerciseReducer').subscribe((state: any) => {
+      this.allExcercies = state.excercises;
+      this.selectSetsBasedOnDate();
+      this.updateSelectedDropItems();
+    })
   }
 
   getMySets() {
-    this.workoutSetsService.getMySets().subscribe((sets) => {
-      this.sets = sets;
-      this.selectSetsBasedOnDate();
-      this.getAllExcercises();
-    },
-      (error => console.log(error)));
-  }
-
-  private getAllExcercises() {
-    this.excerciseService.getAllExcercises().subscribe(
-      (response => {
-        this.allExcercies = response;
-        this.updateSelectedDropItems();
-        console.log(response);
-      }),
-      (error => console.log(error)));
+    this.store.dispatch(new MySetUpdateAction());
+    this.store.dispatch(new UpdateExcercisesAction());
   }
 
   updateSelectedDropItems() {
@@ -58,8 +79,6 @@ export class DairyComponent implements OnInit {
   }
 
   selectSetsBasedOnDateTime(dayOfMonth, month, year) {
-
-
     let filteredSets = this.sets.filter(set => {
       let setDate = new Date(set.date);
       if (setDate.getDate() == dayOfMonth &&
@@ -81,11 +100,10 @@ export class DairyComponent implements OnInit {
 
       this.selectedSets = this.selectSetsBasedOnDateTime(selectedDayOfMonth, selectedMonth, selectedYear);
       this.updateSelectedDropItems();
-      console.log("selected:" + this.selectedSets);
     }
   }
 
-  onClicked(value){
+  onClicked(value) {
     console.log("clciked:" + value);
   }
 

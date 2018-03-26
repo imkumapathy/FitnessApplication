@@ -1,29 +1,22 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-
-import { config } from '../shared/config';
-import { Workout, Excercise, Set } from '../shared/objectDefinitions'
-
-
+import { config } from '../model/config';
+import { Workout, Excercise, Set } from '../model/objectDefinitions';
 let urls = config.baseUrls;
 
 @Injectable()
 export class WorkoutSetsService {
+
     constructor(private http: Http) {
 
     }
-   
 
-    getMySets(): Observable<any> {
+    getMySets(): Observable<Set[]> {
         return this.http
-            .get(urls.serviceUrl + "sets")
+            .get("../assets/data/api/sets.json")
             .map((response: Response) => {
-                console.log(response.json());
-                return <Workout[]>response.json();
+                return <Set[]>response.json();
             });
     }
-
-   
-
 }

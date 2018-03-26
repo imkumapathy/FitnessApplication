@@ -1,6 +1,6 @@
 import { Component, OnInit,ViewChild } from '@angular/core';
 import { WorkoutService } from '../workouts.service'
-import { Workout } from '../../shared/objectDefinitions';
+import { Workout } from '../../model/objectDefinitions';
 import {FilterPipe} from '../../shared/filter.pipe'
 import { Router } from '@angular/router';
 

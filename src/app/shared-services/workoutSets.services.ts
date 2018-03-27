@@ -16,6 +16,7 @@ export class WorkoutSetsService {
         return this.http
             .get("../assets/data/api/sets.json")
             .map((response: Response) => {
+                let something = response.json();
                 return <Set[]>response.json();
             });
     }

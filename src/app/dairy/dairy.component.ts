@@ -2,12 +2,14 @@ import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { WorkoutSetsService } from '../shared-services/workoutSets.services';
 import { Set, Excercise } from '../model/objectDefinitions';
 import { GroupByPipe } from '../shared/groupBy.pipe';
+import { ExcerciseNamePipe } from '../shared/excerciseName.pipe';
+
 import { ExcerciseService } from '../shared-services/excercise.service';
 import { MenuItem } from 'primeng/api';
 
 import { AppState } from '../redux-state/appState';
 import { GetSetsAction, MySetUpdateAction } from '../redux-state/actions/set.action';
-import { UpdateExcercisesAction, ChangeExcercisesAction } from '../redux-state/actions/excercise.action';
+import { UpdateExcercisesAction, GetExcercisesAction } from '../redux-state/actions/excercise.action';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../redux-state/appState';
@@ -32,7 +34,7 @@ export class DairyComponent implements OnInit, OnDestroy {
   constructor(private workoutSetsService: WorkoutSetsService, private excerciseService: ExcerciseService,
     private store: Store<any>) {
   }
-
+  @ViewChild(ExcerciseNamePipe) excerciseNameComponent: ExcerciseNamePipe;
   @ViewChild(GroupByPipe) filterComponent: GroupByPipe;
   ngOnInit() {
     this.subscribeRedux();

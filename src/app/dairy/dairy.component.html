@@ -22,7 +22,7 @@
       </c-item>
     </angular2-multiselect>
     <button>Save Workout</button>
-    <p-dataGrid [emptyMessage]="'Time to do some excercise!'" [value]="selectedSets | groupBy: 'excerciseName'">
+    <p-dataGrid [emptyMessage]="'Time to do some excercise!'" [value]="selectedSets | groupBy: 'excerciseId'">
       <p-header>
         List Of Excercises
       </p-header>
@@ -30,7 +30,7 @@
         <div style="padding:3px" class="ui-g-12 ui-md-3">
           <p-panel [style]="{'text-align':'center'}" (onClick)="onClicked(set.key)">
             <p-header>
-              <a href="" [routerLink]="['/history']">{{set.key}}</a>
+              <a href="" [routerLink]="['/history']" >{{set.key | excerciseName: allExcercies}}</a>
             </p-header>
 
             <div *ngFor="let setValue of set.value">

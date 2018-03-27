@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 //Pipes
 import { FilterPipe } from './filter.pipe';
 import { GroupByPipe } from './groupBy.pipe';
-
+import {ExcerciseNamePipe} from './excerciseName.pipe';
 //redux state
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
@@ -30,8 +30,8 @@ import { excerciseReducer } from '../redux-state/reducers/excercise.reducer';
         EffectsModule.forRoot([SetEffects, ExcercisesEffects]),
         StoreModule.forRoot({ stateReducer, excerciseReducer }), StoreDevtoolsModule.instrument()
     ],
-    exports: [CommonModule, FormsModule, FilterPipe, GroupByPipe],
-    declarations: [FilterPipe, GroupByPipe],
+    exports: [CommonModule, FormsModule, FilterPipe, GroupByPipe,ExcerciseNamePipe],
+    declarations: [FilterPipe, GroupByPipe,ExcerciseNamePipe],
     providers: [ExcerciseService, WorkoutService, WorkoutSetsService]
 })
 export class SharedModule { }

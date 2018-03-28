@@ -4,42 +4,90 @@
   </div> -->
 
   <div class="dairyTopPanel">
-      <p-calendar [(ngModel)]="selectedDate" [inline]="true" (onSelect)="onDateSelected()">
-          <ng-template pTemplate="date" let-date>
-            <span [ngStyle]="{backgroundColor: (isDateSelected(date)) ? '#7cc67c' : 'inherit'}" style="border-radius:50%">{{date.day}}</span>
+
+    <p-calendar [(ngModel)]="selectedDate" [inline]="true" (onSelect)="onDateSelected()">
+      <ng-template pTemplate="date" let-date>
+        <span [ngStyle]="{backgroundColor: (isDateSelected(date)) ? '#7cc67c' : 'inherit'}" style="border-radius:50%">{{date.day}}</span>
+      </ng-template>
+    </p-calendar>
+    <div>
+      <angular2-multiselect [data]="allExcercies" [(ngModel)]="selectedItems" style="width:100px;" (onSelect)="onItemSelect($event)"
+        [settings]="dropdownSettings">
+        <c-item>
+          <ng-template let-item="item">
+            <label style="color: #333;min-width: 150px;"></label>
+            <label for="name">{{item.name}}</label>
           </ng-template>
-        </p-calendar>
-    
+        </c-item>
+      </angular2-multiselect>
+    </div>
   </div>
   <div class="dairyTop2Panel">
-      <angular2-multiselect [data]="allExcercies" [(ngModel)]="selectedItems" style="width:100px;" (onSelect)="onItemSelect($event)"
-      [settings]="dropdownSettings">
-      <c-item>
-        <ng-template let-item="item">
-          <label style="color: #333;min-width: 150px;"></label>
-          <label for="name">{{item.name}}</label>
-        </ng-template>
-      </c-item>
-    </angular2-multiselect>
-    <button>Save Workout</button>
+
     <p-dataGrid [emptyMessage]="'Time to do some excercise!'" [value]="selectedSets | groupBy: 'excerciseId'">
       <p-header>
         List Of Excercises
       </p-header>
       <ng-template let-set pTemplate="item">
         <div style="padding:3px" class="ui-g-12 ui-md-3">
-          <p-panel [style]="{'text-align':'center'}" (onClick)="onClicked(set.key)">
+          <p-panel [style]="{'text-align':'center'}">
             <p-header>
-              <a href="" [routerLink]="['/history']" >{{set.key | excerciseName: allExcercies}}</a>
+              <a href="" [routerLink]="['/history']">{{set.key | excerciseName: allExcercies}}</a>
             </p-header>
 
             <div *ngFor="let setValue of set.value">
-              <div class="car-detail">{{setValue.weight}}Kgs X {{setValue.reps}}</div>
+              <div *ngIf="setValue.weight || setValue.reps">{{setValue.weight}}Kgs X {{setValue.reps}}
+                <fa name="pencil" (click)="editSet(setValue)"></fa>
+              </div>
               <hr class="ui-widget-content" style="border-top:0">
             </div>
+            <fa name="plus" (click)="addSet(set.key)"></fa>
           </p-panel>
         </div>
       </ng-template>
     </p-dataGrid>
   </div>
 </div>
+
+
+
+<p-dialog header="Set Details" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" width="225"
+  (onAfterHide)="onDialogHide()">
+  <div class="ui-grid ui-grid-responsive ui-grid-pad" *ngIf="selectedSet" style="font-size:16px;text-align:center;padding:20px">
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4">Weight: </div>
+      <input type="text" class="ui-grid-col-8" pInputText [(ngModel)]="selectedSet.weight" />
+
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4">Reps: </div>
+      <input type="text" class="ui-grid-col-8" pInputText [(ngModel)]="selectedSet.reps" />
+    </div>
+
+    <div class="ui-grid-row">
+      <button (click)="cancelSetChanges()">Cancel</button>
+      <button (click)="saveSetChanges()">Save</button>
+    </div>
+  </div>
+</p-dialog>
+
+<!--Add New Set -->
+<p-dialog header="Set Details" [(visible)]="displayAddNewDialog" [responsive]="true" showEffect="fade" [modal]="true" width="225"
+  (onAfterHide)="onAddNewDialogHide()">
+  <div class="ui-grid ui-grid-responsive ui-grid-pad" style="font-size:16px;text-align:center;padding:20px">
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4">Weight: </div>
+      <input type="text" class="ui-grid-col-8" pInputText [(ngModel)]="newSet.weight" />
+
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4">Reps: </div>
+      <input type="text" class="ui-grid-col-8" pInputText [(ngModel)]="newSet.reps" />
+    </div>
+
+    <div class="ui-grid-row">
+      <button (click)="cancelNewSet()">Cancel</button>
+      <button (click)="saveNewSet()">Save</button>
+    </div>
+  </div>
+</p-dialog>

@@ -31,6 +31,20 @@ export class DairyComponent implements OnInit, OnDestroy {
   private setsSubscription;
   private excerciseSubscription;
 
+  //for editing set
+  private displayDialog = false;
+  private selectedSet: Set;
+  private preModifiedSet: Set;
+
+  //for adding set
+  private displayAddNewDialog = false;
+  private newSet: Set = new Set();
+  private excerciseForAddingSet = 0;
+
+
+  //dropdown setting for angular 2 multiselect
+  private dropdownSettings:any;
+
   constructor(private workoutSetsService: WorkoutSetsService, private excerciseService: ExcerciseService,
     private store: Store<any>) {
   }
@@ -40,12 +54,23 @@ export class DairyComponent implements OnInit, OnDestroy {
     this.subscribeRedux();
     this.selectedDate = new Date();
     this.getMySets();
+    this.updateDropDownSettings();
   }
 
   ngOnDestroy() {
     this.setsSubscription.unsubscribe();
   }
 
+  updateDropDownSettings()
+  {
+    this.dropdownSettings = { 
+      enableCheckAll: false,
+      singleSelection: false, 
+      text: 'Select Excercise',    
+      maxHeight:100,
+      enableSearchFilter: true
+    };  
+  }
   subscribeRedux() {
 
     this.setsSubscription = this.store.select('stateReducer').subscribe((state: any) => {
@@ -105,8 +130,59 @@ export class DairyComponent implements OnInit, OnDestroy {
     }
   }
 
-  onClicked(value) {
-    console.log("clciked:" + value);
+  onItemSelect(excercise: Excercise) {
+    let set: Set = new Set();
+    set.excerciseId = excercise.id;
+    set.date = this.selectedDate.toDateString();
+    this.sets.push(set);
+    this.selectSetsBasedOnDate();
+    console.log(excercise);
   }
 
+  //Edit set
+  editSet(set: Set) {
+    this.displayDialog = true;
+    this.selectedSet = set;
+    this.preModifiedSet = JSON.parse(JSON.stringify(set));
+  }
+  onDialogHide() {
+    this.displayDialog = false;
+  }
+  cancelSetChanges() {
+    this.displayDialog = false;
+    this.selectedSets.forEach(selectedSet => {
+      if (selectedSet.id == this.selectedSet.id) {
+        selectedSet.weight = this.preModifiedSet.weight;
+        selectedSet.reps = this.preModifiedSet.reps;
+      }
+    });
+  }
+
+  saveSetChanges(){
+    this.displayDialog= false;
+  }
+ 
+//Add set
+  addSet(excerciseId: number) {
+    this.excerciseForAddingSet = excerciseId;
+    this.displayAddNewDialog = true;
+    this.newSet = new Set();
+  }
+
+  onAddNewDialogHide() {
+    this.displayAddNewDialog = false;
+  }
+
+  cancelNewSet() {
+    this.displayAddNewDialog = false;
+  }
+
+  saveNewSet() {
+    this.newSet.excerciseId = Number(this.excerciseForAddingSet);
+    this.newSet.date = this.selectedDate.toDateString();
+    this.displayAddNewDialog = false;
+    this.sets.push(this.newSet);
+    this.selectSetsBasedOnDate();
+
+  }
 }

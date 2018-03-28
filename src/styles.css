@@ -3,6 +3,8 @@
 @import '~primeng/resources/primeng.min.css';
 @import '~primeng/resources/themes/omega/theme.css';
 
+@import '~font-awesome/css/font-awesome.css';
+
 .bodySize{
     height: 98%;
     width: 98%;
@@ -77,8 +79,3 @@ router-outlet{
 grid-column:2/2;
 grid-row: 1/2;
 }
-
-/* .dairyLowerPanel{
-grid-column: 1/2;
-grid-row: 2/3;
-} */

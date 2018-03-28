@@ -8,14 +8,17 @@ import {CalendarModule} from 'primeng/calendar';
 import {DataTableModule} from 'primeng/datatable';
 import {DataGridModule} from 'primeng/datagrid';
 import {PanelModule} from 'primeng/panel';
-import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2-multiselect-dropdown';
+import {DialogModule} from 'primeng/dialog';
+import {InputTextModule} from 'primeng/inputtext';
 
+import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2-multiselect-dropdown';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 import {SharedModule} from '../shared/shared.module';
 @NgModule({
   imports: [
     CommonModule,FormsModule,CalendarModule, SharedModule,DataTableModule,DataGridModule,PanelModule,
-    AngularMultiSelectModule,DairyRoutingModule
+    AngularMultiSelectModule,DairyRoutingModule,DialogModule,InputTextModule,AngularFontAwesomeModule
     
   ],
   declarations: [DairyRoutableComponents],

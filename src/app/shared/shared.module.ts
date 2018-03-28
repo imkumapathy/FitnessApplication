@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
+
 //Pipes
 import { FilterPipe } from './filter.pipe';
 import { GroupByPipe } from './groupBy.pipe';
@@ -29,6 +30,7 @@ import { excerciseReducer } from '../redux-state/reducers/excercise.reducer';
     imports: [CommonModule, FormsModule,
         EffectsModule.forRoot([SetEffects, ExcercisesEffects]),
         StoreModule.forRoot({ stateReducer, excerciseReducer }), StoreDevtoolsModule.instrument()
+       
     ],
     exports: [CommonModule, FormsModule, FilterPipe, GroupByPipe,ExcerciseNamePipe],
     declarations: [FilterPipe, GroupByPipe,ExcerciseNamePipe],

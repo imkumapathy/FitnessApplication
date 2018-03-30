@@ -37,7 +37,7 @@ export class WorkoutService {
             });
     }
 
-    getWorkout(workoutId: number) {
+    getWorkout(workoutId: number) { 
         return this.http.get(urls.serviceUrl + "workout/" + workoutId)
             .map((response: Response) => {
                 console.log(response.json());

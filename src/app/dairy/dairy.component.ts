@@ -8,7 +8,7 @@ import { ExcerciseService } from '../shared-services/excercise.service';
 import { MenuItem } from 'primeng/api';
 
 import { AppState } from '../redux-state/appState';
-import { GetSetsAction, MySetUpdateAction } from '../redux-state/actions/set.action';
+import { MySetUpdateAction, CreateSetAction, UpdateSetAction, DeleteSetAction } from '../redux-state/actions/set.action';
 import { UpdateExcercisesAction, GetExcercisesAction } from '../redux-state/actions/excercise.action';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
@@ -43,7 +43,7 @@ export class DairyComponent implements OnInit, OnDestroy {
 
 
   //dropdown setting for angular 2 multiselect
-  private dropdownSettings:any;
+  private dropdownSettings: any;
 
   constructor(private workoutSetsService: WorkoutSetsService, private excerciseService: ExcerciseService,
     private store: Store<any>) {
@@ -61,20 +61,19 @@ export class DairyComponent implements OnInit, OnDestroy {
     this.setsSubscription.unsubscribe();
   }
 
-  updateDropDownSettings()
-  {
-    this.dropdownSettings = { 
+  updateDropDownSettings() {
+    this.dropdownSettings = {
       enableCheckAll: false,
-      singleSelection: false, 
-      text: 'Select Excercise',    
-      maxHeight:100,
+      singleSelection: false,
+      text: 'Select Excercise',
+      maxHeight: 100,
       enableSearchFilter: true
-    };  
+    };
   }
   subscribeRedux() {
 
     this.setsSubscription = this.store.select('stateReducer').subscribe((state: any) => {
-      this.sets = state.sets;
+      this.sets = JSON.parse(JSON.stringify(state.sets));
       this.selectSetsBasedOnDate();
       this.updateSelectedDropItems();
     });
@@ -158,15 +157,18 @@ export class DairyComponent implements OnInit, OnDestroy {
     });
   }
 
-  saveSetChanges(){
-    this.displayDialog= false;
+  saveSetChanges() {
+    this.displayDialog = false;
+    this.store.dispatch(new UpdateSetAction(this.selectedSet));
   }
- 
-//Add set
+
+  //Add set
   addSet(excerciseId: number) {
     this.excerciseForAddingSet = excerciseId;
     this.displayAddNewDialog = true;
     this.newSet = new Set();
+
+
   }
 
   onAddNewDialogHide() {
@@ -181,8 +183,12 @@ export class DairyComponent implements OnInit, OnDestroy {
     this.newSet.excerciseId = Number(this.excerciseForAddingSet);
     this.newSet.date = this.selectedDate.toDateString();
     this.displayAddNewDialog = false;
-    this.sets.push(this.newSet);
-    this.selectSetsBasedOnDate();
+    this.store.dispatch(new CreateSetAction(this.newSet));
+  }
+
+  //delete set
+  deleteSet(setId) {
+    this.store.dispatch(new DeleteSetAction(setId));
 
   }
 }

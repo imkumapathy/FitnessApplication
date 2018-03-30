@@ -38,6 +38,7 @@
             <div *ngFor="let setValue of set.value">
               <div *ngIf="setValue.weight || setValue.reps">{{setValue.weight}}Kgs X {{setValue.reps}}
                 <fa name="pencil" (click)="editSet(setValue)"></fa>
+                <fa name="trash" (click)="deleteSet(setValue.id)"></fa>
               </div>
               <hr class="ui-widget-content" style="border-top:0">
             </div>
